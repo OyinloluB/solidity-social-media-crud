@@ -11,11 +11,15 @@ contract CrudPostApp {
     }
 
     mapping(uint => Post) public posts;
+    event AddPost(uint id, string memory _title, string memory _content);
+    event DeletePost(uint id, string memory _title, string memory _content);
+    event EditPost(uint id, string memory _title, string memory _content);
 
     // create post
     function addPost(string memory _title, string memory _content) public {
        postCount++;
        posts[postCount] = Post(postCount, _title, _content);
+       emit AddPost(postCount, _title, _content);
     }
 
     // view post
@@ -37,6 +41,7 @@ contract CrudPostApp {
     function deletePost(uint _postId) public {
         postCount--;
         delete posts[_postId];
+        emit DeletePost(_postId, _title, _content);
     }
 
     // edit post
@@ -44,5 +49,6 @@ contract CrudPostApp {
         Post storage _post = posts[_postId];
         _post.title = _title;
         _post.content = _content;
+        emit EditPost(_postId, _title, _content);
     }
 }
