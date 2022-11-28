@@ -11,9 +11,9 @@ contract CrudPostApp {
     }
 
     mapping(uint => Post) public posts;
-    event AddPost(uint id, string memory _title, string memory _content);
-    event DeletePost(uint id, string memory _title, string memory _content);
-    event EditPost(uint id, string memory _title, string memory _content);
+    event AddPost(uint id, string title, string content);
+    event DeletePost(uint id);
+    event EditPost(uint id, string title, string content);
 
     // create post
     function addPost(string memory _title, string memory _content) public {
@@ -41,7 +41,7 @@ contract CrudPostApp {
     function deletePost(uint _postId) public {
         postCount--;
         delete posts[_postId];
-        emit DeletePost(_postId, _title, _content);
+        emit DeletePost(_postId);
     }
 
     // edit post
