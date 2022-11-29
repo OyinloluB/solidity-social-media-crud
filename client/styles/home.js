@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const Container = styled.div`
   display: flex;
@@ -6,7 +6,7 @@ export const Container = styled.div`
   align-items: center;
   height: 100vh;
   font-family: 'Inter', sans-serif;
-`;
+`
 
 export const ConnectWalletWrapper = styled.div`
   background: #ffffff;
@@ -19,7 +19,7 @@ export const ConnectWalletWrapper = styled.div`
   justify-content: space-evenly;
   flex-direction: column;
   padding: 20px;
-`;
+`
 
 export const Heading = styled.h3`
   font-style: normal;
@@ -28,7 +28,7 @@ export const Heading = styled.h3`
   line-height: 38px;
   letter-spacing: -0.6px;
   margin: 0px;
-`;
+`
 
 export const SubText = styled.p`
   width: 300px;
@@ -40,15 +40,16 @@ export const SubText = styled.p`
   text-align: center;
   letter-spacing: -0.064px;
   color: rgba(0, 0, 0, 0.6);
-`;
+`
 
 export const ConnectWalletButton = styled.button`
   width: 100%;
   text-transform: capitalize;
-  background: ${props => props.type === "primary" ? '#007AFF' : "#007AFF26"};
-  color: ${props => props.type === "primary" ? '#ffffff' : "#007AFF"};
+  background: ${(props) =>
+    props.type === 'primary' ? '#007AFF' : '#007AFF26'};
+  color: ${(props) => (props.type === 'primary' ? '#ffffff' : '#007AFF')};
   border-radius: 8px;
   height: 48px;
   border: none;
   cursor: pointer;
-`;
+`

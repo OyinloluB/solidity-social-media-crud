@@ -20,7 +20,7 @@
     "@types/chai": "^4.3.3",
     "@types/mocha": "^9.1.1",
     "chai": "^4.3.6",
-    "ethers": "^5.7.1",
+    "ethers": "^5.7.2",
     "hardhat": "^2.12.2",
     "hardhat-gas-reporter": "^1.0.9",
     "solidity-coverage": "^0.8.2",

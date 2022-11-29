@@ -1,20 +1,99 @@
-import Head from 'next/head';
-import { Container, ConnectWalletWrapper, Heading, SubText, ConnectWalletButton } from '../styles/home.js'
+import { useEffect, useState } from 'react'
+import Head from 'next/head'
+import {
+  Container,
+  ConnectWalletWrapper,
+  Heading,
+  SubText,
+  ConnectWalletButton,
+} from '../styles/home.js'
+import { ethers } from 'ethers'
+import Web3Modal from 'web3modal'
+import { providerOptions } from '../utils/providerOptions'
 
 export default function Home() {
+  let web3Modal
+  useEffect(() => {
+    web3Modal = new Web3Modal({
+      cacheProvider: true,
+      providerOptions,
+    })
+  })
+
+  const [error, setError] = useState('')
+  const [web3ModalProvider, setWeb3ModalProvider] = useState()
+  const [provider, setProvider] = useState()
+  const [account, setAccount] = useState()
+  const [userInfo, setUserInfo] = useState({
+    address: null,
+    balance: 0,
+  })
+
+  const handleWalletConnect = async () => {
+    try {
+      const web3ModalProvider = await web3Modal.connect()
+      const provider = new ethers.providers.Web3Provider(web3ModalProvider)
+      const network = await provider.getNetwork()
+      const signer = provider.getSigner()
+      setWeb3ModalProvider(web3ModalProvider)
+      setProvider(provider)
+      await handleUserAccount(signer, provider)
+
+      provider.send('eth_requestAccounts', []).then(async () => {
+        await handleUserAccount(signer, provider)
+      })
+    } catch (error) {
+      console.log(error)
+      setError(error)
+    }
+  }
+
+  const handleUserAccount = async (signer, provider) => {
+    const address = await signer.getAddress()
+    const balance = await provider.getBalance(address, 'latest')
+    setUserInfo({
+      address,
+      balance,
+    })
+  }
+
+  const handleWalletDisconnect = async () => {
+    try {
+      await web3Modal.clearCachedProvider()
+      setUserInfo({ ...userInfo, address: null })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (web3Modal.cachedProvider) {
+      handleWalletConnect()
+    }
+  }, [])
+
   return (
     <>
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-      </Head>
       <Container>
         <ConnectWalletWrapper>
           <Heading>Dashboard</Heading>
-          <SubText>Connect your wallet to begin publishing, or visit the knowledge base to learn more.</SubText>
-          <ConnectWalletButton type="primary">Connect wallet</ConnectWalletButton>
-          <ConnectWalletButton type="secondary">Browse entries</ConnectWalletButton>
+          <SubText>
+            Connect your wallet to begin publishing, or visit the knowledge base
+            to learn more.
+          </SubText>
+          <ConnectWalletButton
+            type="primary"
+            onClick={() =>
+              !userInfo.address
+                ? handleWalletConnect()
+                : handleWalletDisconnect()
+            }
+          >
+            {!userInfo.address ? 'Connect wallet' : 'Disconnect wallet'}
+          </ConnectWalletButton>
+          <ConnectWalletButton type="secondary">
+            Browse entries
+          </ConnectWalletButton>
         </ConnectWalletWrapper>
       </Container>
     </>
