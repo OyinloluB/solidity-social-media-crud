@@ -3,16 +3,19 @@ import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 
 export const providerOptions = {
   walletlink: {
-    package: CoinbaseWalletSDK, // Required
+    package: CoinbaseWalletSDK,
     options: {
-      appName: "Web 3 Modal Demo", // Required
-      infuraId: process.env.INFURA_KEY // Required unless you provide a JSON RPC url; see `rpc` below
+      appName: "Ink",
+      infuraId: process.env.INFURA_KEY
     }
   },
   walletconnect: {
-    package: WalletConnect, // required
+    package: WalletConnect,
     options: {
-      infuraId: process.env.INFURA_KEY // required
+      infuraId: process.env.INFURA_KEY,
+      rpc: {
+        137: "https://rpc-mainnet.maticvigil.com/",
+      }
     }
   }
 };

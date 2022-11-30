@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Head from 'next/head'
 import {
   Container,
   ConnectWalletWrapper,
@@ -37,10 +36,10 @@ export default function Home() {
       const signer = provider.getSigner()
       setWeb3ModalProvider(web3ModalProvider)
       setProvider(provider)
-      await handleUserAccount(signer, provider)
+      await handleUserInformation(signer, provider)
 
       provider.send('eth_requestAccounts', []).then(async () => {
-        await handleUserAccount(signer, provider)
+        await handleUserInformation(signer, provider)
       })
     } catch (error) {
       console.log(error)
@@ -48,7 +47,7 @@ export default function Home() {
     }
   }
 
-  const handleUserAccount = async (signer, provider) => {
+  const handleUserInformation = async (signer, provider) => {
     const address = await signer.getAddress()
     const balance = await provider.getBalance(address, 'latest')
     setUserInfo({
