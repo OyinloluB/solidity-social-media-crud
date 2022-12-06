@@ -42,7 +42,7 @@ export const SubText = styled.p`
   color: rgba(0, 0, 0, 0.6);
 `
 
-export const ConnectWalletButton = styled.button`
+export const ActionButton = styled.button`
   width: 100%;
   text-transform: capitalize;
   background: ${(props) =>

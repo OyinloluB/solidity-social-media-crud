@@ -4,13 +4,16 @@ import {
   ConnectWalletWrapper,
   Heading,
   SubText,
-  ConnectWalletButton,
+  ActionButton,
 } from '../styles/home.js'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import { providerOptions } from '../utils/providerOptions'
+import { useRouter } from 'next/router'
+import { Spinner, SpinnerWrapper } from '../styles/spinner.js'
 
 export default function Home() {
+  const router = useRouter()
   let web3Modal
   useEffect(() => {
     web3Modal = new Web3Modal({
@@ -22,7 +25,7 @@ export default function Home() {
   const [error, setError] = useState('')
   const [web3ModalProvider, setWeb3ModalProvider] = useState()
   const [provider, setProvider] = useState()
-  const [account, setAccount] = useState()
+  const [loading, setLoading] = useState(false)
   const [userInfo, setUserInfo] = useState({
     address: null,
     balance: 0,
@@ -39,7 +42,11 @@ export default function Home() {
       await handleUserInformation(signer, provider)
 
       provider.send('eth_requestAccounts', []).then(async () => {
-        await handleUserInformation(signer, provider)
+        setTimeout(async () => {
+          await handleUserInformation(signer, provider)
+          setLoading(false)
+        }, 3000)
+        setLoading(true)
       })
     } catch (error) {
       console.log(error)
@@ -73,28 +80,53 @@ export default function Home() {
 
   return (
     <>
-      <Container>
-        <ConnectWalletWrapper>
-          <Heading>Dashboard</Heading>
-          <SubText>
-            Connect your wallet to begin publishing, or visit the knowledge base
-            to learn more.
-          </SubText>
-          <ConnectWalletButton
-            type="primary"
-            onClick={() =>
-              !userInfo.address
-                ? handleWalletConnect()
-                : handleWalletDisconnect()
-            }
-          >
-            {!userInfo.address ? 'Connect wallet' : 'Disconnect wallet'}
-          </ConnectWalletButton>
-          <ConnectWalletButton type="secondary">
-            Browse entries
-          </ConnectWalletButton>
-        </ConnectWalletWrapper>
-      </Container>
+      {loading ? (
+        <SpinnerWrapper>
+          <Spinner />
+        </SpinnerWrapper>
+      ) : (
+        <Container>
+          <ConnectWalletWrapper>
+            <Heading>Dashboard</Heading>
+            {userInfo.address ? (
+              <>
+                <SubText>
+                  Welcome! Click button to begin publishing your first piece
+                </SubText>
+                <ActionButton type="primary">
+                  Create your first post
+                </ActionButton>
+                <ActionButton
+                  type="secondary"
+                  onClick={() => handleWalletDisconnect()}
+                >
+                  View profile
+                </ActionButton>
+              </>
+            ) : (
+              <>
+                <SubText>
+                  Connect your wallet to begin publishing, or visit the
+                  knowledge base to learn more.
+                </SubText>
+                <ActionButton
+                  type="primary"
+                  onClick={() =>
+                    !userInfo.address
+                      ? handleWalletConnect()
+                      : handleWalletDisconnect()
+                  }
+                >
+                  {!userInfo.address ? 'Connect wallet' : 'Disconnect wallet'}
+                </ActionButton>
+                <ActionButton type="secondary">
+                  Browse entries
+                </ActionButton>
+              </>
+            )}
+          </ConnectWalletWrapper>
+        </Container>
+      )}
     </>
   )
 }
