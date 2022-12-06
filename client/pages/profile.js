@@ -5,6 +5,13 @@ import {
   Backdrop,
   ProfileImage,
   ProfileImageWrapper,
+  Form,
+  InputWrapper,
+  InputTextContent,
+  InputLabel,
+  InputDescription,
+  Required,
+  Input,
 } from '../styles/profile'
 
 const Profile = () => {
@@ -18,8 +25,28 @@ const Profile = () => {
         </Backdrop>
         <Form>
           <InputWrapper>
-            <InputLabel></InputLabel>
-            <InputDescription></InputDescription>
+            <InputTextContent>
+              <InputLabel>
+                Name <Required type="primary">Required</Required>
+              </InputLabel>
+              <InputDescription>
+                What do you want to be known as? This can be either you
+                personally, or the name of a project you’re looking to create.
+              </InputDescription>
+            </InputTextContent>
+            <Input />
+          </InputWrapper>
+
+          <InputWrapper>
+            <InputTextContent>
+              <InputLabel>
+                Bio <Required>Required</Required>
+              </InputLabel>
+              <InputDescription>
+                A brief summary of who you are. Accepts basic markdown.
+              </InputDescription>
+            </InputTextContent>
+            <Input />
           </InputWrapper>
         </Form>
       </ProfileWrapper>
