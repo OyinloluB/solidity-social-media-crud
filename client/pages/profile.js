@@ -1,8 +1,30 @@
 import React from 'react'
-import Link from 'next/link'
+import {
+  Container,
+  ProfileWrapper,
+  Backdrop,
+  ProfileImage,
+  ProfileImageWrapper,
+} from '../styles/profile'
 
 const Profile = () => {
-  return <Link href='/'>Profile</Link>
+  return (
+    <Container>
+      <ProfileWrapper>
+        <Backdrop>
+          <ProfileImageWrapper>
+            <ProfileImage></ProfileImage>
+          </ProfileImageWrapper>
+        </Backdrop>
+        <Form>
+          <InputWrapper>
+            <InputLabel></InputLabel>
+            <InputDescription></InputDescription>
+          </InputWrapper>
+        </Form>
+      </ProfileWrapper>
+    </Container>
+  )
 }
 
 export default Profile

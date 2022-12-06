@@ -93,7 +93,10 @@ export default function Home() {
                 <SubText>
                   Welcome! Click button to begin publishing your first piece
                 </SubText>
-                <ActionButton type="primary">
+                <ActionButton
+                  type="primary"
+                  onClick={() => router.push('/profile')}
+                >
                   Create your first post
                 </ActionButton>
                 <ActionButton
@@ -119,9 +122,7 @@ export default function Home() {
                 >
                   {!userInfo.address ? 'Connect wallet' : 'Disconnect wallet'}
                 </ActionButton>
-                <ActionButton type="secondary">
-                  Browse entries
-                </ActionButton>
+                <ActionButton type="secondary">Browse entries</ActionButton>
               </>
             )}
           </ConnectWalletWrapper>
