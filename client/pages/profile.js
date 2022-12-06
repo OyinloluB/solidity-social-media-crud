@@ -12,6 +12,8 @@ import {
   InputDescription,
   Required,
   Input,
+  ButtonWrapper,
+  ActionButton
 } from '../styles/profile'
 
 const Profile = () => {
@@ -36,7 +38,6 @@ const Profile = () => {
             </InputTextContent>
             <Input />
           </InputWrapper>
-
           <InputWrapper>
             <InputTextContent>
               <InputLabel>
@@ -48,6 +49,10 @@ const Profile = () => {
             </InputTextContent>
             <Input />
           </InputWrapper>
+          {/* TO-DO: Move button to seperate component */}
+          <ButtonWrapper>
+            <ActionButton type="primary">Save Settings</ActionButton>
+          </ButtonWrapper>
         </Form>
       </ProfileWrapper>
     </Container>

@@ -30,6 +30,7 @@ export const Backdrop = styled.div`
   height: 162px;
   background: #00000013;
   border-radius: 8px 8px 0px 0px;
+  cursor: pointer;
 `
 
 export const ProfileImageWrapper = styled.div`
@@ -47,6 +48,7 @@ export const ProfileImage = styled.div`
   height: 144px;
   background: rgba(0, 0, 0, 0.03);
   border-radius: 100%;
+  cursor: pointer;
 `
 
 export const Form = styled.form`
@@ -120,4 +122,24 @@ export const Input = styled.input`
   &:focus {
     outline: none;
   }
+`
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+`
+
+export const ActionButton = styled.button`
+  width: 130px;
+  height: 48px;
+  text-transform: capitalize;
+  background: ${(props) =>
+    props.type === 'primary' ? '#007AFF' : '#007AFF26'};
+  color: ${(props) => (props.type === 'primary' ? '#ffffff' : '#007AFF')};
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  border: none;
+  cursor: pointer;
 `

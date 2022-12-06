@@ -50,6 +50,9 @@ export const ActionButton = styled.button`
   color: ${(props) => (props.type === 'primary' ? '#ffffff' : '#007AFF')};
   border-radius: 8px;
   height: 48px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
   border: none;
   cursor: pointer;
 `
