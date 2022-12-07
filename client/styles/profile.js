@@ -4,15 +4,16 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   font-family: 'Inter', sans-serif;
   background: rgba(0, 0, 0, 0.03);
+  padding: 50px;
 `
 
 export const ProfileWrapper = styled.div`
   background: #ffffff;
   border-radius: 24px;
   width: 720px;
+  /* height: 100vh; */
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -51,8 +52,26 @@ export const ProfileImage = styled.div`
   cursor: pointer;
 `
 
+export const AccountAddress = styled.div`
+  margin-top: 13%;
+  width: 127.31px;
+  height: 24px;
+  background: rgba(0, 122, 255, 0.075);
+  border-radius: 9999px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  letter-spacing: -0.064px;
+  color: #007aff;
+`
+
 export const Form = styled.form`
-  margin-top: 15%;
+  margin-top: 5%;
   width: 100%;
 `
 
@@ -127,6 +146,7 @@ export const Input = styled.input`
 export const ButtonWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  justify-content: flex-end;
 `
 
 export const ActionButton = styled.button`

@@ -95,7 +95,12 @@ export default function Home() {
                 </SubText>
                 <ActionButton
                   type="primary"
-                  onClick={() => router.push('/profile')}
+                  onClick={() =>
+                    router.push({
+                      pathname: '/profile',
+                      query: { address: userInfo.address },
+                    })
+                  }
                 >
                   Create your first post
                 </ActionButton>

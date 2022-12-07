@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/router'
 import {
   Container,
   ProfileWrapper,
   Backdrop,
   ProfileImage,
   ProfileImageWrapper,
+  AccountAddress,
   Form,
   InputWrapper,
   InputTextContent,
@@ -13,10 +15,14 @@ import {
   Required,
   Input,
   ButtonWrapper,
-  ActionButton
+  ActionButton,
 } from '../styles/profile'
+import { formatAddress } from '../utils/addressFormatter'
 
 const Profile = () => {
+  const router = useRouter()
+  const address = router.query.address
+
   return (
     <Container>
       <ProfileWrapper>
@@ -25,6 +31,7 @@ const Profile = () => {
             <ProfileImage></ProfileImage>
           </ProfileImageWrapper>
         </Backdrop>
+        <AccountAddress>{formatAddress(address)}</AccountAddress>
         <Form>
           <InputWrapper>
             <InputTextContent>
