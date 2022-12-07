@@ -15,8 +15,8 @@ import {
   Input,
   ButtonWrapper,
   ActionButton,
-} from '../styles/profile'
-import { formatAddress } from '../utils/addressFormatter'
+} from '../../styles/profile'
+import { formatAddress } from '../../utils/addressFormatter'
 
 const Profile = () => {
   const router = useRouter()

@@ -5,12 +5,12 @@ import {
   Heading,
   SubText,
   ActionButton,
-} from '../styles/home.js'
+} from '../../styles/home.js'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
-import { providerOptions } from '../utils/providerOptions'
+import { providerOptions } from '../../utils/providerOptions'
 import { useRouter } from 'next/router'
-import { Spinner, SpinnerWrapper } from '../styles/spinner.js'
+import { Spinner, SpinnerWrapper } from '../../styles/spinner.js'
 
 export default function Home() {
   const router = useRouter()
