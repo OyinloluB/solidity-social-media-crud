@@ -6,7 +6,7 @@ export const Container = styled.div`
   align-items: center;
   font-family: 'Inter', sans-serif;
   background: rgba(0, 0, 0, 0.03);
-  padding: 50px;
+  padding: 120px 50px 30px;
 `
 
 export const ProfileWrapper = styled.div`
