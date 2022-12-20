@@ -47,7 +47,7 @@ const Profile = () => {
           <InputWrapper>
             <InputTextContent>
               <InputLabel>
-                Bio <Required>Required</Required>
+                Bio <Required>Optional</Required>
               </InputLabel>
               <InputDescription>
                 A brief summary of who you are. Accepts basic markdown.
