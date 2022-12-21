@@ -4,13 +4,13 @@ import {
   ConnectWalletWrapper,
   Heading,
   SubText,
-  ActionButton,
 } from '../../styles/home.js'
 import { ethers } from 'ethers'
 import Web3Modal from 'web3modal'
 import { providerOptions } from '../../utils/providerOptions'
 import { useRouter } from 'next/router'
 import { Spinner, SpinnerWrapper } from '../../styles/spinner.js'
+import Button from '../core/buttons'
 
 export default function Home() {
   const router = useRouter()
@@ -23,8 +23,6 @@ export default function Home() {
   })
 
   const [error, setError] = useState('')
-  const [web3ModalProvider, setWeb3ModalProvider] = useState()
-  const [provider, setProvider] = useState()
   const [loading, setLoading] = useState(false)
   const [userInfo, setUserInfo] = useState({
     address: null,
@@ -35,10 +33,7 @@ export default function Home() {
     try {
       const web3ModalProvider = await web3Modal.connect()
       const provider = new ethers.providers.Web3Provider(web3ModalProvider)
-      const network = await provider.getNetwork()
       const signer = provider.getSigner()
-      setWeb3ModalProvider(web3ModalProvider)
-      setProvider(provider)
       await handleUserInformation(signer, provider)
 
       provider.send('eth_requestAccounts', []).then(async () => {
@@ -93,23 +88,21 @@ export default function Home() {
                 <SubText>
                   Welcome! Click button to begin publishing your first piece
                 </SubText>
-                <ActionButton
-                  type="primary"
-                  onClick={() =>
+                <Button
+                  text="Create your first post"
+                  buttonType="primary"
+                  handleClick={() =>
                     router.push({
                       pathname: '/profile',
                       query: { address: userInfo.address },
                     })
                   }
-                >
-                  Create your first post
-                </ActionButton>
-                <ActionButton
-                  type="secondary"
-                  onClick={() => handleWalletDisconnect()}
-                >
-                  View profile
-                </ActionButton>
+                />
+                <Button
+                  text="View profile"
+                  buttonType="secondary"
+                  handleClick={() => handleWalletDisconnect()}
+                />
               </>
             ) : (
               <>
@@ -117,17 +110,18 @@ export default function Home() {
                   Connect your wallet to begin publishing, or visit the
                   knowledge base to learn more.
                 </SubText>
-                <ActionButton
-                  type="primary"
-                  onClick={() =>
+                <Button
+                  text={
+                    !userInfo.address ? 'Connect wallet' : 'Disconnect wallet'
+                  }
+                  buttonType="primary"
+                  handleClick={() =>
                     !userInfo.address
                       ? handleWalletConnect()
                       : handleWalletDisconnect()
                   }
-                >
-                  {!userInfo.address ? 'Connect wallet' : 'Disconnect wallet'}
-                </ActionButton>
-                <ActionButton type="secondary">Browse entries</ActionButton>
+                />
+                <Button text="Browse entries" buttonType="secondary" />
               </>
             )}
           </ConnectWalletWrapper>

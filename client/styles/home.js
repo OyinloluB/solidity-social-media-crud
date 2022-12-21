@@ -41,18 +41,3 @@ export const SubText = styled.p`
   letter-spacing: -0.064px;
   color: rgba(0, 0, 0, 0.6);
 `
-
-export const ActionButton = styled.button`
-  width: 100%;
-  text-transform: capitalize;
-  background: ${(props) =>
-    props.type === 'primary' ? '#007AFF' : '#007AFF26'};
-  color: ${(props) => (props.type === 'primary' ? '#ffffff' : '#007AFF')};
-  border-radius: 8px;
-  height: 48px;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 18px;
-  border: none;
-  cursor: pointer;
-`
