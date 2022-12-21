@@ -1,32 +1,32 @@
 import { useEffect, useState } from 'react'
+import { ethers } from 'ethers'
+import Web3Modal from 'web3modal'
+import { useRouter } from 'next/router'
 import {
   Container,
   ConnectWalletWrapper,
   Heading,
   SubText,
 } from '../../styles/home.js'
-import { ethers } from 'ethers'
-import Web3Modal from 'web3modal'
 import { providerOptions } from '../../utils/providerOptions'
-import { useRouter } from 'next/router'
 import { Spinner, SpinnerWrapper } from '../../styles/spinner.js'
 import Button from '../core/buttons'
 
 export default function Home() {
-  const router = useRouter()
   let web3Modal
-  useEffect(() => {
-    web3Modal = new Web3Modal({
-      cacheProvider: true,
-      providerOptions,
-    })
-  })
-
+  const router = useRouter()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [userInfo, setUserInfo] = useState({
     address: null,
     balance: 0,
+  })
+
+  useEffect(() => {
+    web3Modal = new Web3Modal({
+      cacheProvider: true,
+      providerOptions,
+    })
   })
 
   const handleWalletConnect = async () => {

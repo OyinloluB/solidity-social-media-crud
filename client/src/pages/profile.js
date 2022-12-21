@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { create, CID, IPFSHTTPClient } from 'ipfs-http-client'
 import {
   Container,
   ProfileWrapper,
@@ -15,14 +16,45 @@ import InputField from '../components/input-fields'
 import Button from '../core/buttons'
 
 const Profile = () => {
+  let ipfs
+  const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
+  const projectSecret = process.env.NEXT_PUBLIC_PROJECT_SECRET
+  const auth =
+    'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64')
   const router = useRouter()
   const address = router.query.address
   const [name, setName] = useState('')
   const [bio, setBio] = useState('')
 
+  const IPFSClientConnect = () => {
+    try {
+      ipfs = create({
+        host: 'infura-ipfs.io',
+        port: 5001,
+        protocol: 'https',
+        headers: {
+          authorization: auth,
+        },
+      })
+    } catch (error) {
+      console.error('IPFS error ', error)
+      ipfs = undefined
+    }
+  }
+
+  const addDataToIPFS = async (data) => {
+    const result = await ipfs.add(data)
+    console.log(result)
+  }
+
+  useEffect(() => {
+    IPFSClientConnect()
+  })
+
   const handleSaveProfile = (e) => {
     e.preventDefault()
-    // TO-DO: Store profile to ipfs
+    // TO-DO: Store name and bio object to ipfs
+    addDataToIPFS(JSON.stringify({ name: 'Hello', bio: 'World' }))
   }
 
   return (
@@ -54,7 +86,7 @@ const Profile = () => {
               text="Save Profile"
               buttonType="primary"
               buttonSize="sm"
-              onClick={(e) => handleSaveProfile(e)}
+              handleClick={(e) => handleSaveProfile(e)}
             />
           </ButtonWrapper>
         </Form>

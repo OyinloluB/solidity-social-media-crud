@@ -6,13 +6,13 @@ export const providerOptions = {
     package: CoinbaseWalletSDK,
     options: {
       appName: "Ink",
-      infuraId: process.env.INFURA_KEY
+      infuraId: process.env.NEXT_PUBLIC_INFURA_KEY
     }
   },
   walletconnect: {
     package: WalletConnect,
     options: {
-      infuraId: process.env.INFURA_KEY,
+      infuraId: process.env.NEXT_PUBLIC_INFURA_KEY,
       rpc: {
         137: "https://rpc-mainnet.maticvigil.com/",
       }
