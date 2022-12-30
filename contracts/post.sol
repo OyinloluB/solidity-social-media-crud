@@ -6,15 +6,24 @@ pragma solidity ^0.8.17;
  * @notice This contract serves as a social-media dapp backend.
  *         CRUD operations*
  */
+import "./PostToken.sol";
+
 contract CrudPostApp {
     //set post counter
     uint public postCount = 0;
+    PostToken postToken;
+
+    constructor(address _postToken){
+        postToken = PostToken(_postToken);
+    }
 
     //define Post data structure
     struct Post {
         uint id;
+        address owner;
         string title;
         string content;
+        uint validation;
     }
 
     //track the id of the posts
@@ -25,23 +34,33 @@ contract CrudPostApp {
 
     //custom error
     error EditDeletedPost();
+    error ValidateDeletedPost();
+    error NeedTokenToValidate();
 
 
     //event handlers
     event AddPost(uint id, string _title, string _content, address owner);
     event DeletePost(uint id);
     event EditPost(uint id, string _title, string _content, address editor);
+    event ValidatePost(uint id, address validator, uint validations);
+
+    //modifiers
+    modifier onlyTokenOwner(){
+        if (postToken.balanceOf(msg.sender) < 0)
+            revert NeedTokenToValidate();
+        _;
+    }
 
     // create post
     function addPost(string memory _title, string memory _content) public returns(uint _postId){
         //incremment counter
        postCount++;
         //create instance of data structure in memory and assign arguments
-       Post memory newPost = Post(postCount, _title, _content);
+       Post memory newPost = Post(postCount, msg.sender, _title, _content, 0);
        //assign post to mapping pf ids to post
        posts[postCount] = newPost;
        deleted[postCount] = false;
-       
+       postToken.creatorMint(msg.sender);
        //emit event AddPost
        emit AddPost(postCount, _title, _content, msg.sender);
 
@@ -78,5 +97,15 @@ contract CrudPostApp {
         _post.title = _title;
         _post.content = _content;
         emit EditPost(_postId, _title, _content, msg.sender);
+    }
+
+    // validate post
+    function validatePost(uint _postId, uint _clicks) public onlyTokenOwner {
+        if (deleted[_postId]) revert ValidateDeletedPost();
+        Post storage _post = posts[_postId];
+        _post.validation += _clicks;
+        address owner =_post.owner;
+        postToken.validatedMint(owner);
+        emit ValidatePost(_postId, msg.sender, _clicks);
     }
 }   
